@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的个人网站</title>
+    <title>余恩瑶我爱你</title>
     <style>
         * {
             margin: 0;
@@ -10,7 +10,6 @@
             box-sizing: border-box;
         }
 
-        /* 渐变粉色背景 */
         body {
             width: 100vw;
             height: 100vh;
@@ -26,14 +25,12 @@
             position: relative;
         }
 
-        /* 背景渐变动画 */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* 闪粉星光画布 */
         #sparkles {
             position: absolute;
             top: 0;
@@ -43,19 +40,22 @@
             pointer-events: none;
         }
 
-        /* 欢迎文字 */
-        .welcome {
-            font-size: 48px;
+        .love-text {
+            font-size: 46px;
             color: white;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 25px rgba(255,255,255,0.9);
             margin-bottom: 40px;
             text-align: center;
-            animation: fadeIn 2s ease;
             z-index: 10;
+            animation: fadeIn 2s ease;
         }
 
-        /* 点击按钮 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .enter-btn {
             padding: 18px 50px;
             font-size: 22px;
@@ -73,26 +73,25 @@
             transform: scale(1.1);
             box-shadow: 0 0 35px rgba(255, 255, 255, 1);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </head>
 
 <body>
-    <!-- 闪粉效果 -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="https://webfs.yun.kugou.com/202506011032/4b772991291232299999999999999999/128/part/0/9/09090909090909090909090909090909.mp3" type="audio/mpeg">
+    </audio>
+
     <canvas id="sparkles"></canvas>
 
-    <!-- 欢迎文字 -->
-    <div class="welcome">欢迎来到我的个人网站</div>
+    <div class="love-text">余恩瑶我爱你</div>
 
-    <!-- 点击进入按钮 -->
     <button class="enter-btn" onclick="goNext()">点击进入主页</button>
 
     <script>
-        // ===================== 闪粉星光特效 =====================
+        window.addEventListener('click', function() {
+            document.getElementById('bgMusic').play();
+        }, { once: true });
+
         const canvas = document.getElementById('sparkles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -109,14 +108,14 @@
             };
         }
 
-        for (let i = 0; i < 120; i++) sparks.push(createSpark());
+        for (let i = 0; i < 150; i++) sparks.push(createSpark());
 
         function drawSparkles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
             for (let s of sparks) {
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
+                ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+                ctx.fillStyle = `rgba(255,255,255,${s.opacity})`;
                 ctx.fill();
                 s.y += s.speed;
                 if (s.y > canvas.height) s.y = 0;
@@ -125,11 +124,9 @@
         }
         drawSparkles();
 
-        // ===================== 点击跳转 =====================
         function goNext() {
-            document.querySelector('.welcome').innerText = "正在进入…";
+            document.querySelector('.love-text').innerText = "正在进入…";
             setTimeout(() => {
-                // 跳转到第二页
                 window.location.href = "home.html";
             }, 800);
         }
